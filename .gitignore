@@ -1,0 +1,9 @@
+# logs folder
+logs/
+
+# my own .env for development
+src/config/dev.env
+
+# nodejs log and library
+node_modules/
+package-lock.json
