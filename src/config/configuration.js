@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 class EnvironmentConfiguration {
     constructor() {
         this.token = '';
+        this.client_id = '';
     }
     /**
      * Load environment configuration from an existing .env
@@ -12,6 +13,7 @@ class EnvironmentConfiguration {
     static loadFromENV(env_config) {
         const config = new EnvironmentConfiguration();
         config.token = env_config.parsed.TOKEN;
+        config.client_id = env_config.parsed.CLIENT_ID;
         return config;
     }
 }
