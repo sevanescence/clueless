@@ -2,7 +2,7 @@
 logs/
 
 # my own .env for development
-src/config/dev.env
+resources/dev.env
 
 # nodejs log and library
 node_modules/

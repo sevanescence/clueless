@@ -1,6 +1,6 @@
 const EnvironmentConfiguration = require('./config/configuration');
-const SlashCommandHandler = require('./slashcommandhandler');
-const SlashCommand = require('./slashcommand');
+const SlashCommandHandler = require('./slashcommand/slashcommandhandler');
+const SlashCommand = require('./slashcommand/slashcommand');
 const ExitHandler = require('./exithandler');
 const Logger = require('./logger');
 
@@ -14,13 +14,17 @@ const path = require('path');
 class Bot extends Discord.Client {
     /**
      * @param {dotenv.DotenvConfigOutput} env_config if no config is defined,
-     *                                               defaults to ./.env
+     *                                               defaults to ../resources/.env
      * @param {Discord.ClientOptions} options
      */
-    constructor(env_config = dotenv.config(), options) {
+    constructor(
+        env_config = dotenv.config({
+            path: path.join(__dirname, '..', 'resources', '.env'),
+        }),
+        options
+    ) {
         super(options);
         this.config = EnvironmentConfiguration.loadFromENV(env_config);
-        this.slashCommandHandler = new SlashCommandHandler(this);
         // initialize logger and set log folder location
         this.logger = new Logger(path.join(__dirname, '..', 'logs'));
         // setup exit handler. callback will execute upon program death.
@@ -28,10 +32,9 @@ class Bot extends Discord.Client {
             this.logger.dumpLogs();
         });
         this.exitHandler.initialize();
-        this.interactions = new interactions.Client(
-            this.config.token,
-            '775177410458681345'
-        );
+        /** @type {string} path to resources folder */
+        this.resources = path.join(__dirname, '..', 'resources');
+        this.slashCommandHandler = new SlashCommandHandler(this);
     }
     /**
      * Login with token stored in local env

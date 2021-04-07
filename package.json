@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "discord-slash-commands-client": "^1.1.1",
-    "discord.js": "git+https://github.com/MatteZ02/discord.js.git",
+    "discord.js": "^12.5.3",
     "dotenv": "^8.2.0"
   }
 }

@@ -4,6 +4,7 @@ class EnvironmentConfiguration {
     constructor() {
         this.token = '';
         this.client_id = '';
+        this.guild_id = '';
     }
     /**
      * Load environment configuration from an existing .env
@@ -14,6 +15,7 @@ class EnvironmentConfiguration {
         const config = new EnvironmentConfiguration();
         config.token = env_config.parsed.TOKEN;
         config.client_id = env_config.parsed.CLIENT_ID;
+        config.guild_id = env_config.parsed.GUILD_ID;
         return config;
     }
 }
