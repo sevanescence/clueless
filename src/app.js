@@ -26,6 +26,8 @@ bot.once('ready', () => {
 });
 
 // TODO: add permissions to Command, exclude from form body.
+// TODO: remove client ID from environment configuration.
+// TODO: change Interaction to class to avoid parameter obfuscation.
 
 // for today, just follow the data model
 // provided by the discord slash commands
