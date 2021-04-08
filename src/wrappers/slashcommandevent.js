@@ -1,11 +1,11 @@
 const Interaction = require('./interaction');
 const Bot = require('../bot');
 
-const SlashCommandEvent = {
+const CommandEvent = {
     /** @type {Interaction} */
     interaction: undefined,
     /** @type {Bot} */
     bot: undefined,
 };
 
-module.exports = SlashCommandEvent;
+module.exports = CommandEvent;

@@ -1,10 +1,6 @@
-{
-    "test": {
-        "description": "This is a test command.",
-        "permissions": "view_channels | send_messages"
-    },
-    "testadmin": {
-        "description": "This is an admin test command",
-        "permissions": "administrator"
+[
+    {
+        "name": "ping",
+        "description": "Ping the bot."
     }
-}
+]

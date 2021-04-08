@@ -1,10 +1,9 @@
 const Bot = require('./bot');
-
-const TestAdmin = require('./commands/testadmin');
-const Test = require('./commands/test');
+// literally just load the bot source before anything else
 
 const dotenv = require('dotenv');
 const path = require('path');
+const Ping = require('./commands/ping');
 
 // initialize configuration
 const env_config = dotenv.config({
@@ -22,11 +21,12 @@ bot.login();
 bot.once('ready', () => {
     const s = `${bot.user.username}#${bot.user.discriminator} is online!`;
     bot.logger.info(s);
-    bot.slashCommandHandler.initCommands();
-    bot.slashCommandHandler.getCommand('test').setExecutor(new Test());
-    bot.slashCommandHandler
-        .getCommand('testadmin')
-        .setExecutor(new TestAdmin());
+    bot.commandhandler.initCommands();
+    bot.commandhandler.commands.get('ping').executor = new Ping();
 });
 
-// TODO: add sub command support
+// TODO: add permissions to Command, exclude from form body.
+
+// for today, just follow the data model
+// provided by the discord slash commands
+// documentation.
