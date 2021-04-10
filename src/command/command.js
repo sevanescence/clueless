@@ -1,7 +1,10 @@
 const CommandExecutor = require('./commandexecutor');
 const CommandOption = require('./commandoption');
 
-// ApplicationCommand according to the Discord API specifications (as well as an executor).
+// ApplicationCommand according to the Discord API specifications.
+// Note: CommandExecuter and permission are not part of the
+//       official API, but are rather my own implementations for
+//       dynamic command functionality.
 
 /** https://discord.com/developers/docs/interactions/slash-commands#applicationcommand */
 class Command {
@@ -19,6 +22,10 @@ class Command {
      * @param {Command} command
      * @param {string} client_id - ID of your bot/application
      */
+    /**
+     * @type {number} - Permission required to execute command
+     */
+    permission = 8;
     constructor(command, client_id) {
         if (!client_id) {
             console.error('Client ID was not passed to Command constructor.');
@@ -35,6 +42,7 @@ class Command {
             }
         }
         this.executor = new CommandExecutor();
+        this.permission = 8;
     }
     /** @return {string} */
     parseToFormBody() {
@@ -42,6 +50,7 @@ class Command {
         delete obj.executor;
         delete obj.id;
         delete obj.application_id;
+        delete obj.permission;
         if (obj.options.length === 0) {
             delete obj.options;
         } else {

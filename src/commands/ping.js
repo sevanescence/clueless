@@ -8,6 +8,7 @@ class Ping extends CommandExecutor {
     onCommand(event) {
         this.send(event, {
             content: 'Pong!',
+            flags: 64,
         });
     }
 }
