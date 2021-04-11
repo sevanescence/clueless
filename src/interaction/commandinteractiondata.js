@@ -13,6 +13,23 @@ class CommandInteractionData {
      * the values from the user
      */
     options = [];
+    /**
+     * @param {CommandInteractionData} body
+     * @return {CommandInteractionData}
+     */
+    static parseFromFormBody(body) {
+        const obj = new CommandInteractionData();
+        obj.id = body.id;
+        obj.name = body.name;
+        if (body.options) {
+            for (let option of body.options) {
+                obj.options.push(
+                    CommandInteractionDataOption.parseFromFormBody(option)
+                );
+            }
+        }
+        return obj;
+    }
 }
 
 module.exports = CommandInteractionData;

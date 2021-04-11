@@ -14,6 +14,24 @@ class CommandInteractionDataOption {
      * is group or subcommand
      */
     options = [];
+    /**
+     * @param {CommandInteractionDataOption} body
+     * @return {CommandInteractionDataOption}
+     */
+    static parseFromFormBody(body) {
+        const obj = new CommandInteractionDataOption();
+        obj.name = body.name;
+        obj.value = body.value;
+        // checking the type is not required since a non-command wont pass options
+        if (body.options) {
+            for (let option of body.options) {
+                obj.options.push(
+                    CommandInteractionDataOption.parseFromFormBody(option)
+                );
+            }
+        }
+        return obj;
+    }
 }
 
 module.exports = CommandInteractionDataOption;

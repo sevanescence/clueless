@@ -1,6 +1,8 @@
 const CommandExecutor = require('./commandexecutor');
 const CommandOption = require('./commandoption');
 
+const Discord = require('discord.js');
+
 // ApplicationCommand according to the Discord API specifications.
 // Note: CommandExecuter and permission are not part of the
 //       official API, but are rather my own implementations for
@@ -25,7 +27,11 @@ class Command {
     /**
      * @type {number} - Permission required to execute command
      */
-    permission = 8;
+    permission = 0;
+    /**
+     * @param {Command} command
+     * @param {number} client_id
+     */
     constructor(command, client_id) {
         if (!client_id) {
             console.error('Client ID was not passed to Command constructor.');
@@ -42,7 +48,15 @@ class Command {
             }
         }
         this.executor = new CommandExecutor();
-        this.permission = 8;
+        if (command.permissions) {
+            /** @type {string} */
+            let perm = command.permissions
+                .toUpperCase()
+                .replace(/([A-Z_]+?)(?=\s|$)/g, 'Discord.Permissions.FLAGS.$1');
+            this.permission = eval(perm);
+        } else {
+            this.permission = Discord.Permissions.FLAGS.VIEW_CHANNEL;
+        }
     }
     /** @return {string} */
     parseToFormBody() {

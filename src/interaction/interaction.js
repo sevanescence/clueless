@@ -29,6 +29,24 @@ class Interaction {
     token = '';
     /** read-only property, always 1 */
     version = 1;
+    /**
+     * @param {Interaction} body
+     * @return {Interaction}
+     */
+    static parseFromFormBody(body) {
+        const obj = new Interaction();
+        obj.id = body.id;
+        obj.application_id = body.application_id;
+        obj.type = body.type;
+        obj.data = CommandInteractionData.parseFromFormBody(body.data);
+        obj.guild_id = body.guild_id;
+        obj.channel_id = body.channel_id;
+        obj.member = body.member;
+        obj.user = body.user;
+        obj.token = body.token;
+        obj.version = body.version; // should always be 1...
+        return obj;
+    }
 }
 
 module.exports = Interaction;

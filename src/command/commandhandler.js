@@ -1,8 +1,10 @@
-const Interaction = require('../wrappers/interaction');
+const Interaction = require('../interaction/interaction');
 const Command = require('./command');
 const Bot = require('../bot');
 
 const path = require('path');
+const CommandEvent = require('../wrappers/slashcommandevent');
+const { Permissions } = require('discord.js');
 
 const defaultCommandsPath = path.join(
     __dirname,
@@ -43,10 +45,19 @@ class CommandHandler {
             /** @type {Interaction} */ interaction
         ) => {
             const commandName = interaction.data.name.toLowerCase();
-            this.commands.get(commandName).executor.onCommand({
-                bot: this.bot,
-                interaction,
-            });
+            const command = this.commands.get(commandName);
+            const event = new CommandEvent(this.bot, interaction);
+            if (
+                interaction.member &&
+                interaction.member.hasPermission(command.permission)
+            ) {
+                this.commands.get(commandName).executor.onCommand(event);
+            } else {
+                command.executor.send(event, {
+                    content: 'You do not have permission to run this command.',
+                    flags: 64,
+                });
+            }
         });
     }
 }
